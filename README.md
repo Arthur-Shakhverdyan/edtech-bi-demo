@@ -36,6 +36,7 @@
 git clone https://github.com/Arthur-Shakhverdyan/edtech-bi-demo.git
 cd edtech-bi-demo
 docker-compose up -d
+```
 
 ## 🚀 Структура DAG'ов
 
