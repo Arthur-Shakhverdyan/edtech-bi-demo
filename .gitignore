@@ -1,0 +1,28 @@
+# IDE
+.idea/
+
+# Виртуальные окружения
+.venv/
+airflow/venv/
+
+# Airflow логи и временные данные
+airflow/logs/
+airflow/pg_data/
+airflow/pgadmin_data/
+airflow/plugins/
+airflow/.env
+airflow/Dockerfile
+
+# ClickHouse данные (вся вложенная папка clickhouse/clickhouse)
+clickhouse/clickhouse/
+
+# PostgreSQL данные
+pg/pg_data/
+pg/pgadmin_data/
+
+# Общие конфигурационные файлы
+.env
+
+# Игнорировать все в папке datalens кроме docker-compose.yml
+datalens/*
+!datalens/docker-compose.yml
