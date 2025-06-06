@@ -16,13 +16,13 @@
 
 ## 🧱 Архитектура
 
-[CRM (эмуляция)] --> [RAW (PostgreSQL)] --> [ODM (PostgreSQL)] --> [BI (ClickHouse)] --> [DataLens]
+[CRM (эмуляция)] --> [RAW (PostgreSQL)] --> [CDM (PostgreSQL)] --> [BI (ClickHouse)] --> [DataLens]
 |
 [Airflow DAGs]
 
 
 **Компоненты:**
-- **PostgreSQL** — два слоя: raw и ODM
+- **PostgreSQL** — два слоя: raw и CDM
 - **ClickHouse** — хранение витрин
 - **Apache Airflow** — DAG’и для генерации, трансформации и репликации
 - **Yandex DataLens** — визуализация отчётов
@@ -40,9 +40,16 @@ docker-compose up -d
 
 ## 🚀 Структура DAG'ов
 
-- **data_generate_crm_data_dag** — эмуляция данных, запись в RAW  
-- **etl_odm_dag** — обрабатывает RAW → ODM  
-- **replication_dag** — реплицирует ODM → ClickHouse  
+- **generate_crm_data_dag** — генерация и эмуляция CRM-данных, запись в RAW  
+- **registration_agg_dag** — агрегация регистраций, подготовка данных для аналитики  
+- **payments_agg_dag** — агрегация платежей для BI  
+- **cohort_retention_agg_dag** — расчёт когортного удержания  
+- **funnel_agg_dag** — построение воронок конверсии  
+
+- **replicate_registration_to_ch_dag** — репликация регистраций из CDM в ClickHouse  
+- **replicate_payments_to_ch_dag** — репликация платежей из CDM в ClickHouse  
+- **replicate_funnel_to_ch_dag** — репликация воронок из CDM в ClickHouse  
+- **replicate_retention_to_ch_dag** — репликация когортного удержания из CDM в ClickHouse  
 
 ---
 
