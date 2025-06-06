@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server:25.1.2.3
+    container_name: clickhouse
+    ports:
+      - "8123:8123"   # HTTP порт
+      - "9000:9000"   # Native клиент
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+      - clickhouse_logs:/var/log/clickhouse-server
+      - C:/Users/Asus/Documents/project/edtech-bi/clickhouse/clickhouse/data/preprocessed_configs/users.xml:/etc/clickhouse-server/users.xml:ro
+    networks:
+      - airflow_network
+
+volumes:
+  clickhouse_data:
+  clickhouse_logs:
+
+networks:
+  airflow_network:
+    external: true

@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server:25.1.2.3
+    container_name: clickhouse
+    restart: always                # чтобы контейнер рестартился при падении или рестарте докера
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    mem_limit: 4g                 # ограничение памяти, работает в compose v3.4+
+    cpus: 2.0                    # ограничение CPU, работает в compose v3.4+
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+      - clickhouse_logs:/var/log/clickhouse-server
+      - C:/Users/Asus/Documents/project/edtech-bi/clickhouse/clickhouse/data/preprocessed_configs/users.xml:/etc/clickhouse-server/users.xml:ro
+    networks:
+      - airflow_network
+
+  postgres:
+    image: postgres:15
+    container_name: edtech-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: edtech_user
+      POSTGRES_PASSWORD: edtech_pass
+      POSTGRES_DB: edtech_db
+    ports:
+      - "5432:5432"
+    mem_limit: 4g
+    cpus: 2.0
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
+    networks:
+      - airflow_network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: edtech-pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    mem_limit: 512m
+    cpus: 0.5
+    volumes:
+      - ./pgadmin_data:/var/lib/pgadmin
+    networks:
+      - airflow_network
+
+volumes:
+  clickhouse_data:
+  clickhouse_logs:
+
+networks:
+  airflow_network:
+    external: true
