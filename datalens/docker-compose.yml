@@ -86,7 +86,7 @@ services:
       POSTGRES_DSN_LIST: ${METADATA_POSTGRES_DSN_LIST:-postgres://us:us@pg-us:5432/us-db-ci_purgeable}
       SKIP_INSTALL_DB_EXTENSIONS: ${METADATA_SKIP_INSTALL_DB_EXTENSIONS:-0}
       USE_DEMO_DATA: ${USE_DEMO_DATA:-1}
-      HC: ${HC:-0}
+      HC: 1
       NODE_EXTRA_CA_CERTS: /certs/root.crt
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -115,7 +115,7 @@ services:
       BI_DATA_ENDPOINT: "http://data-api:8080"
       US_MASTER_TOKEN: "fake-us-master-token"
       NODE_EXTRA_CA_CERTS: "/usr/local/share/ca-certificates/cert.pem"
-      HC: ${HC:-0}
+      HC: 1
       YANDEX_MAP_ENABLED: ${YANDEX_MAP_ENABLED:-0}
       YANDEX_MAP_TOKEN: ${YANDEX_MAP_TOKEN}
     networks:
