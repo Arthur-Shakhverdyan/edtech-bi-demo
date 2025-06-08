@@ -56,5 +56,4 @@ docker-compose up -d
 ## 📊 Пример визуализации
 
 ![Dashboard 1](images/dashboard-1.png)
-![Dashboard 2](images/dashboard-2.png)
 
